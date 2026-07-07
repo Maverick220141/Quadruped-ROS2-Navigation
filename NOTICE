@@ -14,17 +14,17 @@ First-party / project packages:
 
 Third-party packages kept in active src:
 - src/FAST_LIO: GPL-2.0-only, see src/FAST_LIO/LICENSE.
-- src/LIO-SAM: BSD-3-Clause, see src/LIO-SAM/LICENSE.
 - src/livox_ros_driver2: MIT/Livox license text, see src/livox_ros_driver2/LICENSE.txt.
 - src/livox_ros_driver2/3rdparty/rapidjson: see its bundled license.txt.
 - src/agibot_motion_service/third_party/zsibot_sdk-0.2.6: BSD-3-Clause, see its LICENSE.
 
 Optional packages under unused_packages:
+- LIO-SAM: BSD-3-Clause, optional graph-SLAM package, see unused_packages/LIO-SAM/LICENSE.
 - livox_repub: Apache-2.0, optional Livox CustomMsg to PointCloud2 bridge.
-- rslidar_msg, rsLiDAR_sdk, rs_driver: RoboSense LiDAR support, BSD/upstream licenses.
+- rslidar_msg, rsLiDAR_sdk, rs_driver: RoboSense LiDAR support, BSD-3-Clause/upstream licenses.
 - serial, yesense_interface, yesense_std_ros2: external serial/YESENSE IMU support, Apache/upstream licenses.
 - legacy_agibot_driver: Apache-2.0 reference package for the old AgiBot bridge path.
 
 Large sample and map assets are intentionally kept in this repository for now,
-including existing PCD maps, PGM maps, and upstream FAST_LIO/LIO-SAM media.
+including existing PCD maps, PGM maps, and upstream package media.
 Consider Git LFS later if repository size becomes a problem.

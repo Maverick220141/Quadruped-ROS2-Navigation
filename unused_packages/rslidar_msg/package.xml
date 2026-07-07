@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>ros msgs for the rslidar_sdk project</description>
   <maintainer email="zdxiao@robosense.cn">robosense</maintainer>
-  <license>BSD</license>
+  <license>BSD-3-Clause</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
