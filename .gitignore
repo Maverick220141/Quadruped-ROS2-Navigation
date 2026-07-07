@@ -1,0 +1,31 @@
+# ROS 2 build products
+build/
+install/
+log/
+.colcon/
+
+# Python/cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Runtime logs and generated diagnostics
+*.log
+Log/*.log
+src/FAST_LIO/Log/*.log
+
+# ROS bags and recorded databases
+*.bag
+*.db3
+*.mcap
+rosbag2_*/
+
+# Editor/OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local environment files
+.env
+.env.*

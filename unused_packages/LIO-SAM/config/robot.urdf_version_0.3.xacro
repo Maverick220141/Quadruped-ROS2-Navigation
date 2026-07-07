@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot name="agibot_with_imu_center">
+
+  <!--
+    机器人的基础坐标系，其原点与IMU中心重合。
+  -->
+  <link name="base_link"></link>
+  <link name="imu_link" />
+  <link name="rslidar" />
+
+  <!--
+    这个关节将 imu_link 固定在 base_link 上。
+    它们的位置和姿态完全相同。
+  -->
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <!--
+    这个关节定义了激光雷达相对于 base_link (IMU) 的物理位置。
+    根据描述：向前 (+x) 7.5cm，向上 (+z) 17.6cm。
+  -->
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="rslidar" />
+    <origin xyz="0.075 0 0.176" rpy="0 0 0" />
+  </joint>
+
+</robot>

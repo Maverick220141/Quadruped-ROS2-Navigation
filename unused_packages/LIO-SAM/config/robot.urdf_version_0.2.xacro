@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="agibot_with_imu_center">
+
+  <!-- 
+    这是机器人的基础坐标系 (base_link)，我们现在将它和IMU的中心绑定在一起。
+  -->
+  <link name="base_link"></link>
+  <link name="imu_link" />
+  <link name="rslidar" />
+
+  <!-- 
+    定义IMU和base_link的关系。
+    xyz和rpy都为0，意味着它们是同一个东西。
+  -->
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <!-- 
+    定义激光雷达和base_link（也就是IMU）的关系。
+    这里使用反向的平移向量！
+  -->
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="rslidar" />
+    <!-- 
+      这个值是旧的 extrinsicTrans: [-0.075, 0.0, -0.176] 的反向值 
+    -->
+    <origin xyz="0.075 0 0.176" rpy="0 0 0" />
+  </joint>
+
+</robot>

@@ -1,0 +1,7 @@
+# 请求：空
+---
+# 响应：状态信息
+string current_state # 当前状态
+float32 battery_level # 电池电量
+bool is_ready        # 是否就绪
+string control_source # 当前控制源

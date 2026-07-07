@@ -1,0 +1,64 @@
+<!--
+  GICP Nav2 behavior tree.
+  FollowPath is responsible for reaching the goal position.
+  RotateToGoalHeading then aligns to the goal yaw using the shortest signed turn.
+-->
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <RecoveryNode number_of_retries="1" name="NavigateRecovery">
+      <PipelineSequence name="NavigateWithBlockedPathReplanning">
+        <ClearCostmapsOnce
+          goal="{goal}"
+          clear_local="true"
+          clear_global="false"
+          timeout="3.0"
+          local_service="local_costmap/clear_entirely_local_costmap"
+          global_service="global_costmap/clear_entirely_global_costmap"/>
+        <Wait wait_duration="1.0"/>
+
+        <RateController hz="0.5">
+          <RecoveryNode number_of_retries="2" name="ComputePathToPose">
+            <Fallback name="ReplanOnlyWhenPathInvalid">
+              <ReactiveSequence name="UseCurrentPathIfStillGood">
+                <Inverter>
+                  <GlobalUpdatedGoal/>
+                </Inverter>
+                <IsPathValid path="{path}"/>
+              </ReactiveSequence>
+              <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
+            </Fallback>
+            <Wait wait_duration="1"/>
+          </RecoveryNode>
+        </RateController>
+
+        <Sequence name="FollowAndAlign">
+          <RecoveryNode number_of_retries="2" name="FollowPathWithReplan">
+            <FollowPath path="{path}" controller_id="FollowPath"/>
+            <Sequence name="ReplanAfterFollowFailure">
+              <Wait wait_duration="1"/>
+              <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
+            </Sequence>
+          </RecoveryNode>
+
+          <ForceSuccess>
+            <RotateToGoalHeading
+              goal="{goal}"
+              tolerance="0.14"
+              max_angular_speed="0.45"
+              min_angular_speed="0.18"
+              p_gain="1.6"
+              cmd_vel_topic="/cmd_vel"
+              timeout="8.0"
+              global_frame="map"
+              robot_base_frame="base_footprint"/>
+          </ForceSuccess>
+        </Sequence>
+      </PipelineSequence>
+
+      <ReactiveFallback name="RecoveryFallback">
+        <GoalUpdated/>
+        <Wait wait_duration="2"/>
+      </ReactiveFallback>
+    </RecoveryNode>
+  </BehaviorTree>
+</root>

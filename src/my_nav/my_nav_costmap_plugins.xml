@@ -1,0 +1,10 @@
+<library path="virtual_obstacle_layer">
+  <class
+    name="my_nav::VirtualObstacleLayer"
+    type="my_nav::VirtualObstacleLayer"
+    base_class_type="nav2_costmap_2d::Layer">
+    <description>
+      Marks short-lived virtual obstacles in the global costmap from blocked-path memory.
+    </description>
+  </class>
+</library>

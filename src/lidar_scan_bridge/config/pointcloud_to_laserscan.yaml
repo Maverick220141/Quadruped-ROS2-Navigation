@@ -1,0 +1,42 @@
+# pointcloud_to_laserscan.yaml (优化后)
+# pointcloud_to_laserscan:
+pointcloud_to_laserscan_node:
+  ros__parameters:
+    # FAST-LIO publishes /cloud_registered_body in livox_frame.
+    # Transform it to the robot body center before projecting to LaserScan.
+    target_frame: base_link
+    transform_tolerance: 0.5
+    use_sim_time: false
+    # 关键：true=继承 PointCloud2 自带的 stamp（来自 Fast-LIO 时钟桥后的 ROS 时钟，等于 lidar_end_time）
+    # 之前是 false，等于用"pcl2scan 接收时刻"覆盖，又引入 30~50ms 延迟，造成 AMCL 在旋转时震荡
+    use_pointcloud_timestamp: true
+    use_header_stamp: true
+    output_frame: base_link
+    
+    # [Height crop] Input is transformed to base_link before projection.
+    # 四足步态会让 IMU 在 z 方向 ±5cm 摆动，min_height 必须留余量避免地面点漏过
+    # min_height 0.10 = base_link 上方 10cm 起裁，确保任何步态都不会扫到地面
+    # max_height 0.40 = base_link 上方 40cm 截止，避免天花板和高处障碍
+    # （如果你的机器狗 base_link 离地高度不是 ≈25cm，这两个值可能要调）
+    min_height: -0.15
+    max_height: 0.55
+
+    # [核心优化] 量程
+    # 走廊最宽2米，两侧是玻璃。5米的最大量程是比较安全的选择，
+    # 既能看到前方足够远的距离，又能有效抑制玻璃墙产生的虚假远距离点。
+    range_min: 0.3  # 根据您的雷达盲区(0.2m)设置
+    range_max: 8.0
+
+    # 角度设置 (通常无需修改)
+    angle_min: -3.1415926 # -180 degrees
+    angle_max:  3.1415926 # +180 degrees
+    angle_increment: 0.01745 # ~1.0 degree, more stable for sparse MID360 scan projection
+
+    # 队列处理
+    scan_time: 0.1   # 10Hz
+    queue_size: 20
+    filter_speckles: false
+
+    # 其他
+    use_inf: true
+    inf_epsilon: 1.0

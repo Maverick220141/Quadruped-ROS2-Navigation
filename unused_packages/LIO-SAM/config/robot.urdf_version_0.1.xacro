@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="lio_sam_robot" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- 
+    这是机器人的基础坐标系 (base_link)，是所有其他部件的参考中心。
+  -->
+  <link name="base_link"></link>
+
+  <!-- 
+    IMU 坐标系
+    这里的 link name="imu_link" 必须与您IMU节点发布消息中的 'frame_id' 完全一致。
+    <origin> 标签定义了IMU相对于 base_link 的物理安装位置和姿态。
+    我们暂时假设它们重合。
+  -->
+  <link name="imu_link" />
+  <joint name="imu_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="imu_link" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+  <!-- 
+    激光雷达坐标系
+    这里的 link name="rslidar" 必须与您雷达节点发布消息中的 'frame_id' 
+    以及 params.yaml 文件中的 'lidarFrame' 参数完全一致。
+    <origin> 标签定义了雷达相对于 base_link 的物理安装位置和姿态。
+    我们暂时假设它们重合。
+  -->
+  <link name="rslidar" />
+  <joint name="lidar_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="rslidar" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+
+</robot>

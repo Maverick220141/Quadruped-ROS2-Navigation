@@ -1,0 +1,14 @@
+# 请求：运动控制指令
+string action_name  # 动作名称：move, stand_up, lie_down, jump等
+float32 vx          # 前向速度（单位：m/s）
+float32 vy          # 侧向速度（单位：m/s）
+float32 yaw_rate    # 转向角速度（单位：rad/s）
+float32 duration    # 动作持续时间（秒）：0表示无限持续
+string control_source  # 控制源：navigation, voice, emergency
+float32 control_value   # 相对运动参数值：forward/backward 表示距离，turn 表示圈数
+string control_unit     # 相对运动单位：forward/backward 默认 m，turn 默认 circle
+---
+# 响应：执行结果
+bool success        # 动作是否执行成功
+string message      # 执行状态描述
+string current_state # 当前机器狗状态

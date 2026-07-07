@@ -1,0 +1,10 @@
+yesense_pub:
+    ros__parameters:
+        serial_port: "/dev/wheeltec_IMU"
+        baud_rate: 460800
+        frame_id: "imu_link"
+        driver_type: "ros_serial"
+        imu_topic_ros: "imu/data"
+        imu_topic: "imu_data"
+
+

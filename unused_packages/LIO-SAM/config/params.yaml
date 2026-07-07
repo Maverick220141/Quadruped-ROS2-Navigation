@@ -1,0 +1,93 @@
+/**:
+  ros__parameters:
+
+    # Topics
+    pointCloudTopic: "/rslidar_points"
+    imuTopic: "/imu/data"
+    odomTopic: "odometry/imu"
+    gpsTopic: "odometry/gpsz"
+
+    # Frames
+    lidarFrame: "rslidar"
+    baselinkFrame: "base_link"
+    odometryFrame: "odom"
+    mapFrame: "map"
+
+    # GPS Settings
+    useImuHeadingInitialization: false
+    useGpsElevation: false
+    gpsCovThreshold: 2.0
+    poseCovThreshold: 25.0
+
+    # Export settings
+    savePCD: false
+    savePCDDirectory: "/Downloads/LOAM/"
+
+    # Sensor Settings
+    sensor: velodyne
+    N_SCAN: 16
+    Horizon_SCAN: 1800
+    downsampleRate: 1
+    lidarMinRange: 0.3  #1.0
+    lidarMaxRange: 1000.0
+
+    # IMU Settings
+    # 注意：这些参数值是在机器狗趴着的情况下标定的。
+    # 您必须在机器狗【站立静止】的状态下，使用 imu_utils 重新标定至少两小时，
+    # 以获得准确的噪声参数。这对算法性能至关重要。
+    imuAccNoise: 7.57583e-03      #6.535637e-02   #1.73053e-01   #9.16632e-02    #1.43145e-01
+    imuGyrNoise: 1.26127e-03      #1.017947e-03   #2.45477e-02   #7.61068e-03    #2.20642e-03
+    imuAccBiasN: 2.7634e-04       #1.289820e-03   #2.09932e-02   #1.0635e-02     #1.35833e-03
+    imuGyrBiasN: 1.1256e-05       #3.867917e-05   #7.774e-04     #6.9316e-04     #4.01e-05
+    imuGravity: 9.80511
+    imuRPYWeight: 0.01
+
+    # 外参 (IMU -> Lidar)
+    # 重要：我们将这些值设为单位阵，因为我们现在改为在 URDF 文件中定义外参。
+    # LIO-SAM 将会从 /tf_static 话题中获取正确的变换关系。
+    extrinsicTrans: [ 0.0, 0.0, 0.0]   #[ 0.08527,  0.0,  0.05165 ]
+    extrinsicRot:   [ 1.0,  0.0,  0.0,
+                      0.0,  1.0,  0.0,
+                      0.0,  0.0,  1.0 ]
+    extrinsicRPY:   [ 1.0,  0.0,  0.0,
+                      0.0,  1.0,  0.0,
+                      0.0,  0.0,  1.0 ]
+
+    # LOAM feature threshold
+    edgeThreshold: 0.8   #1.0
+    surfThreshold: 0.08  #0.1
+    edgeFeatureMinValidNum: 10
+    surfFeatureMinValidNum: 100
+
+    # voxel filter paprams
+    odometrySurfLeafSize: 0.3    #0.4
+    mappingCornerLeafSize: 0.05  #0.2
+    mappingSurfLeafSize: 0.1     #0.4
+
+    # robot motion constraint
+    z_tollerance: 2.5         #1000.0
+    rotation_tollerance: 0.4  #1000.0
+
+    # CPU Params
+    numberOfCores: 4
+    mappingProcessInterval: 0.15
+
+    # Surrounding map
+    surroundingkeyframeAddingDistThreshold: 0.5   #1.0
+    surroundingkeyframeAddingAngleThreshold: 0.1  #0.2
+    surroundingKeyframeDensity: 1.5  #2.0
+    surroundingKeyframeSearchRadius: 70.0  #50.0
+
+    # Loop closure
+    loopClosureEnableFlag: true
+    loopClosureFrequency: 1.0
+    surroundingKeyframeSize: 80          #50
+    historyKeyframeSearchRadius: 25.0    #15.0
+    historyKeyframeSearchTimeDiff: 20.0  #30.0
+    historyKeyframeSearchNum: 50         #25
+    historyKeyframeFitnessScore: 0.5     #0.3
+
+    # Visualization
+    globalMapVisualizationSearchRadius: 1000.0
+    globalMapVisualizationPoseDensity: 10.0
+    globalMapVisualizationLeafSize: 0.2

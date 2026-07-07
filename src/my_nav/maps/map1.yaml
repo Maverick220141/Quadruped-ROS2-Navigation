@@ -1,0 +1,7 @@
+image: map1.pgm # 地图图片路径
+mode: trinary
+resolution: 0.05 # 地图分辨率
+origin: [-5.67, -13.5, 0] # 地图原点
+negate: 0 # 是否反转
+occupied_thresh: 0.65 # 障碍物阈值
+free_thresh: 0.25 # 自由空间阈值
